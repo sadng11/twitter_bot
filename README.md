@@ -13,3 +13,27 @@ this source code fetch data from twitter with requests lib in python like consol
 
 
 #### this file save tweet in db and make thread for each tweet reply
+
+
+See demo :
+
+- end point list:  
+http://twitter.hiva.pics:8003/
+
+- twitter tracked user list:  
+http://twitter.hiva.pics:8003/tw-users/?format=json
+
+- twitter conversation thread:  
+http://twitter.hiva.pics:8003/tweets/?format=json
+
+- twitter filter conversation thread by author id:  
+http://twitter.hiva.pics:8003/tweets/?tw_author_id=813286&format=json
+
+- tweet reply list:  
+http://twitter.hiva.pics:8003/reply/?format=json
+
+- tweet reply filter by tweet_id:  
+http://twitter.hiva.pics:8003/reply/?twee_id=1630615307759894638&format=json
+
+- user's active audience:  
+http://twitter.hiva.pics:8003/audience/?format=json

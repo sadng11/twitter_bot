@@ -1,6 +1,3 @@
-from flask_marshmallow import Schema
-from marshmallow import fields
-
 from base import Base
 from sqlalchemy import Column, String, Integer, Text, DateTime
 
@@ -27,11 +24,3 @@ class Tweet(Base):
         self.quote_count = quote_count
         self.reply_count = reply_count
         self.retweet_count = retweet_count
-
-
-class TweetSchema(Schema):
-    pages = fields.Integer(dump_to='numPages', dump_only=True)
-
-    class Meta:
-        fields = ("id", "tw_id", "tw_author_id", "tw_date", 'pages')
-        model = Tweet

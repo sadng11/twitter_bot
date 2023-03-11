@@ -18,22 +18,22 @@ this source code fetch data from twitter with requests lib in python like consol
 See demo :
 
 - end point list:  
-http://tweeter.hiva.pics:8003
+http://twitter.hiva.pics:8003/
 
 - twitter tracked user list:  
-http://tweeter.hiva.pics:8003/tw-users/?format=json
+http://twitter.hiva.pics:8003/tw-users/?format=json
 
 - twitter conversation thread:  
-http://185.110.191.136:8003/tweets/?format=json
+http://twitter.hiva.pics:8003/tweets/?format=json
 
 - twitter filter conversation thread by author id:  
-http://tweeter.hiva.pics:8003/tweets/?tw_author_id=813286&format=json
+http://twitter.hiva.pics:8003/tweets/?tw_author_id=813286&format=json
 
 - tweet reply list:  
-http://tweeter.hiva.pics:8003/reply/?format=json
+http://twitter.hiva.pics:8003/reply/?format=json
 
 - tweet reply filter by tweet_id:  
-http://tweeter.hiva.pics:8003/reply/?twee_id=1630615307759894638&format=json
+http://twitter.hiva.pics:8003/reply/?twee_id=1630615307759894638&format=json
 
 - user's active audience:  
-http://tweeter.hiva.pics:8003/audience/?format=json
+http://twitter.hiva.pics:8003/audience/?format=json

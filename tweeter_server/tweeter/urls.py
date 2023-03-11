@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path, include
 from rest_framework import routers
 
@@ -26,6 +27,6 @@ router.register(r'tweets', thread_view.TweetViewSet)
 router.register(r'reply', thread_view.ReplyViewSet)
 router.register(r'audience', thread_view.AudienceViewSet, basename='audience')
 urlpatterns = [
-    path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
-]
+                  path('', include(router.urls)),
+                  path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+              ] + staticfiles_urlpatterns()

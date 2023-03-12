@@ -1,7 +1,6 @@
 import os
 import random
 from datetime import datetime
-import traceback
 from threading import Thread
 from time import sleep
 from base import Session
@@ -9,7 +8,7 @@ from entities.reply import Reply
 from entities.tokens import ReplyToken
 from sqlalchemy import desc
 from decouple import config
-
+import sentry_sdk
 from tweet import Tweeter
 
 if config('PROXY', default=False, cast=bool):
@@ -26,6 +25,11 @@ class FetchComments(Thread):
         flag = True
         next_token_reply = None
         session = Session()
+
+        sentry_sdk.init(
+            dsn=config("SENTRY_URL"),
+            traces_sample_rate=1.0
+        )
         while flag:
             try:
                 q_f = {'tweet_id': self.tweet_id}

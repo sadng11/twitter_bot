@@ -1,7 +1,6 @@
 import argparse
 import datetime as fdatetime
 import os
-import traceback
 from datetime import datetime
 from time import sleep
 import tzlocal
@@ -12,6 +11,7 @@ from entities.tweet import Tweet
 from fetch_comments import FetchComments
 from tweet import Tweeter
 from decouple import config
+import sentry_sdk
 
 if config('PROXY', default=False, cast=bool):
     os.environ['http_proxy'] = 'http://127.0.0.1:8889'
@@ -29,6 +29,11 @@ next_token = None
 flag = True
 process_list_count = 5
 tweet = Tweeter()
+
+sentry_sdk.init(
+    dsn=config("SENTRY_URL"),
+    traces_sample_rate=1.0
+)
 while flag:
     try:
         process_list = session.query(Process).filter(Process.tw_user_id == args.user_id).count()

@@ -38,7 +38,7 @@ class FetchComments(Thread):
                     q_f.update({"next_token": next_token_reply})
 
                 sleep(random.randint(3, 5))
-                print("fetching reply in {}".format(self.name))
+                # print("fetching reply in {}".format(self.name))
 
                 reply_res_json = Tweeter().get_reply(**q_f)
                 if reply_res_json['data'] is not None:
@@ -63,7 +63,7 @@ class FetchComments(Thread):
                                       core_item['legacy']['friends_count'], views,
                                       datetime_object))
                             session.commit()
-                            print("insert reply in {}".format(self.name))
+                            # print("insert reply in {}".format(self.name))
                     if 'meta' in reply_res_json and 'next_token' in reply_res_json['meta']:
                         next_token_reply = reply_res_json['meta']['next_token']
                         session.add(ReplyToken(self.tweet_id, self.name, next_token_reply))
@@ -71,12 +71,12 @@ class FetchComments(Thread):
                     else:
                         flag = False
                 else:
-                    print("error in fetch tweet.detail is : {}".format(reply_res_json['detail']))
+                    # print("error in fetch tweet.detail is : {}".format(reply_res_json['detail']))
                     if reply_res_json['detail'] == 'Rate limit exceeded':
                         sleep(30)
                     flag = False
             except Exception as e:
-                print("error in reply with tw_id : {} ,thread : {}".format(self.tweet_id, self.name))
-                print(traceback.format_exc())
-                print(e)
+                # print("error in reply with tw_id : {} ,thread : {}".format(self.tweet_id, self.name))
+                # print(traceback.format_exc())
+                # print(e)
                 sleep(2)

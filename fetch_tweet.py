@@ -62,7 +62,7 @@ while flag:
                                           datetime_object, int(item['views']['count']), tweet_data['quote_count'],
                                           tweet_data['reply_count'], tweet_data['retweet_count']))
                         session.commit()
-                        print('insert tweet')
+                        # print('insert tweet')
 
                     th_list.append(
                         {'thread': FetchComments(tweet_id=tweet_data['id_str']),
@@ -78,21 +78,21 @@ while flag:
                     session.add(TweetToken(args.user_id, next_token, None))
                     session.commit()
                     next_token = json_data['meta']['next_token']
-                    print("get next token")
+                    # print("get next token")
 
                 for x in th_list:
                     x['thread'].join()
                     session.query(Process).filter(Process.id == x['db_id']).delete()
                     session.commit()
             else:
-                print("error in fetch tweet.detail is : {}".format(json_data['detail']))
+                # print("error in fetch tweet.detail is : {}".format(json_data['detail']))
                 if json_data['detail'] == 'Rate limit exceeded':
                     sleep(30)
         else:
             sleep(5)
     except Exception as e:
-        print("error in fetch tweet")
-        print(e)
-        print(traceback.format_exc())
+        # print("error in fetch tweet")
+        # print(e)
+        # print(traceback.format_exc())
         flag = True
         sleep(2)

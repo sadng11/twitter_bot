@@ -1,6 +1,8 @@
 import argparse
 import datetime as fdatetime
+import logging
 import os
+import traceback
 from datetime import datetime
 from time import sleep
 import tzlocal
@@ -99,5 +101,7 @@ while flag:
         # print("error in fetch tweet")
         # print(e)
         # print(traceback.format_exc())
+        # logging.error(e)
+        logging.error(traceback.format_exc())
         flag = True
         sleep(2)

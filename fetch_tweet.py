@@ -102,6 +102,7 @@ while flag:
         # print(e)
         # print(traceback.format_exc())
         # logging.error(e)
+        logging.error(e)
         logging.error(traceback.format_exc())
         flag = True
         sleep(2)

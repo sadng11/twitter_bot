@@ -87,6 +87,6 @@ class FetchComments(Thread):
                 # print("error in reply with tw_id : {} ,thread : {}".format(self.tweet_id, self.name))
                 # print(traceback.format_exc())
                 # print(e)
-                # logging.error(e)
+                logging.error(e)
                 logging.error(traceback.format_exc())
                 sleep(2)

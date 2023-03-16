@@ -2,6 +2,19 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
+class Process(models.Model):
+    objects = models.Manager()
+    pid = models.CharField(max_length=255, blank=False, default=None, unique=True)
+    date = models.DateTimeField(blank=False, default=None)
+    tw_user_id = models.CharField(max_length=255, blank=False, default=None)
+
+    class Meta:
+        db_table = 'process'
+        verbose_name = _('Process')
+        verbose_name_plural = _('Process')
+        ordering = ['-id']
+
+
 class Tweet(models.Model):
     objects = models.Manager()
     tw_id = models.CharField(max_length=255, blank=False, default=None, unique=True)

@@ -100,8 +100,8 @@ while flag:
     except Exception as e:
         # print("error in fetch tweet")
         # print(e)
-        # print(traceback.format_exc())
-        # logging.error(e)
+        logging.error(e)
+        print(traceback.format_exc())
         logging.exception(e, exc_info=True, )
         # logging.error(traceback.format_exc())
         flag = True

@@ -6,6 +6,8 @@ import traceback
 from datetime import datetime
 from time import sleep
 import tzlocal
+from sentry_sdk.integrations.logging import LoggingIntegration
+
 from base import Session, Base, engine
 from entities.process import Process
 from entities.tokens import TweetToken
@@ -31,9 +33,15 @@ next_token = None
 flag = True
 process_list_count = 5
 tweet = Tweeter()
-
+sentry_logging = LoggingIntegration(
+    level=logging.INFO,  # Capture info and above as breadcrumbs
+    event_level=logging.ERROR  # Send errors as events
+)
 sentry_sdk.init(
     dsn=config("SENTRY_URL"),
+    integrations=[
+        sentry_logging,
+    ],
     traces_sample_rate=1.0
 )
 while flag:

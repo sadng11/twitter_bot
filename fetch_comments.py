@@ -7,6 +7,7 @@ from threading import Thread
 from time import sleep
 
 import sentry_sdk
+from sentry_sdk.integrations.logging import LoggingIntegration
 
 from base import Session
 from entities.reply import Reply
@@ -24,8 +25,15 @@ class FetchComments(Thread):
     def __init__(self, tweet_id):
         super().__init__()
         self.tweet_id = tweet_id
+        sentry_logging = LoggingIntegration(
+            level=logging.INFO,  # Capture info and above as breadcrumbs
+            event_level=logging.ERROR  # Send errors as events
+        )
         sentry_sdk.init(
             dsn=config("SENTRY_URL"),
+            integrations=[
+                sentry_logging,
+            ],
             traces_sample_rate=1.0
         )
 

@@ -41,8 +41,9 @@ class UserViewSet(viewsets.ModelViewSet):
                 TwUser.objects.create(tw_username=user_data['username'], tw_name=user_data['name'],
                                       tw_uid=user_data['id'])
             process = Process.objects.filter(tw_user_id=user_data['id']).first()
-            subprocess.Popen(['kill', process.pid])
-            Process.objects.filter(tw_user_id=user_data['id']).delete()
+            if process is not None:
+                subprocess.Popen(['kill', process.pid])
+                Process.objects.filter(tw_user_id=user_data['id']).delete()
             subprocess.Popen(
                 ["python", '../fetch_tweet.py', '--user_id', user_data['id']])
             return Response({"run": "OK"})

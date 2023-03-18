@@ -114,3 +114,4 @@ while flag:
         # logging.error(traceback.format_exc())
         flag = True
         sleep(2)
+session.close()

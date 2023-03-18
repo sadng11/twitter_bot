@@ -98,3 +98,4 @@ class FetchComments(Thread):
                 logging.error(e)
                 logging.error(traceback.format_exc())
                 sleep(2)
+        session.close()

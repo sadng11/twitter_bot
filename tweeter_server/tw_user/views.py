@@ -47,4 +47,4 @@ class UserViewSet(viewsets.ModelViewSet):
                 ["python", '../fetch_tweet.py', '--user_id', user_data['id']])
             return Response({"run": "OK"})
         except Exception as e:
-            return Response({"error": e})
+            return Response({"error": str(e)})

@@ -1,0 +1,69 @@
+version: "3.8"
+services:
+  # Redis
+  redis:
+    image: redis:alpine
+    container_name: redis
+
+  # Database
+  db:
+    platform: linux/x86_64
+    image: mysql:5.7
+    env_file: .env
+    volumes:
+      - ../docker/db_data:/var/lib/mysql
+      - ../docker/mysqld:/var/run/mysqld
+    restart: always
+    ports:
+      - "${MYSQL_REMOTE_PORT}:${MYSQL_LOCAL_PORT}"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USERNAME}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+  # Django Application
+  app:
+    build: .
+    volumes:
+      - .:/home/app/webapp
+      - ../docker/mysqld:/run/mysqld
+    ports:
+      - "${REMOTE_SERVER_PORT}:${LOCAL_SERVER_PORT}"
+    image: app:django
+    container_name: django_app
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:${LOCAL_SERVER_PORT}"
+    depends_on:
+      - db
+    links:
+      - db
+
+  # Celery
+  celery:
+    restart: always
+    build:
+      context: .
+    command: sh -c "celery -A tweeter worker -l DEBUG"
+    volumes:
+      - .:/home/app/webapp
+    container_name: celery
+    depends_on:
+      - redis
+      - app
+
+  # phpmyadmin
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin
+    env_file: .env
+    restart: always
+    ports:
+      - "${PHP_MY_ADMIN_REMOTE_PORT}:${PHP_MY_ADMIN_LOCAL_PORT}"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+volumes:
+  db:
+  app:
+  celery:

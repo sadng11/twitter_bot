@@ -137,6 +137,10 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100
 }
 
+
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
+
 # LOGGING = {
 #     'version': 1,
 #     'filters': {
